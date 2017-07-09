@@ -4,12 +4,19 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 )
+
+type httpClient interface {
+	Post(string, string, io.Reader) (*http.Response, error)
+}
 
 type Scoro struct {
 	APIKey      string
 	CompanyName string
+
+	client httpClient
 }
 
 func NewScoro(name, apiKey string) (s Scoro) {
