@@ -7,6 +7,12 @@ import (
 
 type Config struct {
 	Listen string `json:"listen_address"`
+	Scoro  ScoroConfig
+}
+
+type ScoroConfig struct {
+	Company string
+	Key     string
 }
 
 func LoadConfig(f string) (c Config, err error) {

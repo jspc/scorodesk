@@ -17,6 +17,7 @@ var (
 	FilePath = flag.String("c", "testdata/config.json", "config file")
 
 	C Config
+	S Scoro
 
 	ErrorLogger *log.Logger
 )
@@ -41,6 +42,8 @@ func main() {
 	if err != nil {
 		ErrorLogger.Panic(err)
 	}
+
+	S = NewScoro(C.Scoro.Company, C.Scoro.Key)
 
 	t, err := strconv.Atoi(builtWhen)
 	if err != nil {
