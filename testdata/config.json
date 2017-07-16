@@ -1,5 +1,5 @@
 {
-    "listen_address": "localhost:8080"
+    "listen_address": "localhost:8080",
     "scoro": {
         "company": "test-company",
         "key": "some-api-key"
