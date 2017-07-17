@@ -1,0 +1,9 @@
+- src: git@github.com:zeebox/ansible-beamly-metrics.git
+  version: master
+  scm: git
+  name: beamly.metrics
+
+- src: git@github.com:webhop/ansible-awslogs.git
+  version: HEAD
+  scm: git
+  name: beamly.awslogs

@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+description "scorodesk - the only beamly email service that doesn't suck"
+start on (local-filesystems and net-device-up IFACE!=lo)
+stop on runlevel [!2345]
+
+
+# Start the service
+script
+  echo "Starting scorodesk"
+  exec {{ scorodesk_binpath }} -c {{ scorodesk_config_path }}
+  respawn
+  respawn limit 10 10
+  kill timeout 10
+end script

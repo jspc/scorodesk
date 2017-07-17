@@ -1,0 +1,10 @@
+---
+# defaults file for scorodesk
+scorodesk_version: latest
+scorodesk_url: "https://s3.amazonaws.com/beamly-pipeline-artifacts/scorodesk/{{ scorodesk_version }}/scorodesk"
+scorodesk_binpath: /usr/local/bin/scorodesk
+scorodesk_config_dir: /etc/beamly/scorodesk
+scorodesk_config_path: "{{ scorodesk_config_dir }}/config.json"
+## Config defaults
+scorodesk_listen_host: 0.0.0.0
+scorodesk_listen_port: 8080

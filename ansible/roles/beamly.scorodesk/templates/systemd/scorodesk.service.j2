@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=Runs the scorodesk service
+Documentation=https://github.com/zeebox/scorodesk/blob/master/README.md
+Requires=network-online.target
+
+[Service]
+Type=simple
+TimeoutStartSec=20
+ExecStart={{ scorodesk_binpath }} -c {{ scorodesk_config_path }}
+
+[Install]
+WantedBy=multi-user.target

@@ -1,1 +1,4 @@
 scorodesk
+ansible/roles/*
+!ansible/roles/beamly.scorodesk/
+*.retry

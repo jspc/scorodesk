@@ -1,0 +1,28 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  become: yes
+  become_method: sudo
+
+  pre_tasks:
+    - set_fact:
+        telegraf_start_service: False # used by beamly.metrics
+
+  vars:
+    awslogs_role_name: beamly.awslogs
+    scorodesk_awslogs_config:
+      system_log:
+        log_file: "/var/log/upstart/scorodesk.log"
+        retention: 1
+
+  post_tasks:
+    - name: "Configure CloudWatch log aggregation"
+      include: roles/beamly.awslogs/tasks/component-setup.yml
+      vars:
+        awslogs_component: "scorodesk"
+        awslogs_config: "scorodesk_awslogs_config"
+
+  roles:
+    - role: beamly.awslogs
+    - role: beamly.metrics
+    - role: beamly.scorodesk

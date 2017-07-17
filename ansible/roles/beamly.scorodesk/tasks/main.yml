@@ -1,0 +1,49 @@
+---
+# tasks file for scorodesk
+- name: Download scorodesk binary
+  get_url:
+    url: "{{ scorodesk_url }}"
+    dest: "{{ scorodesk_binpath }}"
+    mode: 0755
+
+- name: Detect systemd
+  shell: '[[ $(systemctl) =~ -\.mount ]] && echo yes || echo no'
+  register: detect_systemd_output
+
+- name: Install scorodesk upstart script
+  template:
+    src: upstart/scorodesk.conf.j2
+    dest: /etc/init/scorodesk.conf
+    owner: root
+    group: root
+    mode: 0644
+  when: not detect_systemd_output.stdout|bool
+
+- name: install scorodesk systemd script
+  template:
+    src: systemd/scorodesk.service.j2
+    dest: /etc/systemd/system/scorodesk.service
+    owner: root
+    group: root
+    mode: 0644
+  when: detect_systemd_output.stdout|bool
+
+- name: Enable the service in systemd
+  command: /bin/systemctl enable scorodesk
+  when: detect_systemd_output.stdout|bool
+
+- name: Ensure scorodesk config directory exists
+  file:
+    path: "{{ scorodesk_config_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Write scorodesk config file
+  template:
+    src: config.json.j2
+    dest: "{{ scorodesk_config_path }}"
+    owner: root
+    group: root
+    mode: 0644
